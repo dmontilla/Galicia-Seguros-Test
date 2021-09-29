@@ -1,22 +1,27 @@
 ﻿using Galicia.Test.BusinessRules.Person;
 using Galicia.Test.Core.Base;
 using Galicia.Test.Core.Entitie;
+using Galicia.Test.Infrastructure.Data;
 using Galicia.Test.Shared.Dto.Persona;
 using Galicia.Test.Shared.Profiles;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Galicia.Test.BusinessRules.Implementation.Person
 {
     public class PeronaBusinessRules : IPersonaBusinessRules
     {
-        private readonly IBaseRepository<Persona> personaRepository;
+        private readonly IBaseRepository<Persona> basePersonaRepository;
+        private readonly TestDbContext context;
 
-        public PeronaBusinessRules(IBaseRepository<Persona> personaRepository)
+        public PeronaBusinessRules(IBaseRepository<Persona> basePersonaRepository, TestDbContext context)
         {
-            this.personaRepository = personaRepository;
+            this.basePersonaRepository = basePersonaRepository ?? throw new ArgumentNullException(nameof(basePersonaRepository));
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
+            this.context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
         public async Task<(string,bool)> AddPerson(PersonaForCreateDto persona)
         {
@@ -30,39 +35,38 @@ namespace Galicia.Test.BusinessRules.Implementation.Person
             if (await ExistsTelefono(0, persona.Telefono))
                 return ("Ya existe un Telefono igual al suministrado", false);
 
-            personaRepository.Add(entitie);
-            personaRepository.SaveChanges();
+            basePersonaRepository.Add(entitie);
+            basePersonaRepository.SaveChanges();
 
-            return ("",true);
+            return (entitie.Id.ToString(),true);
         }
 
         public async Task<bool> DeletePerson(int id)
         {
-            var entitiePersona = await personaRepository.FindByIdAsync(id);
+            var entitiePersona = await context.Personas.FindAsync(id);
             if (entitiePersona is null)
                 return false;
             
-            personaRepository.DeleteById(id);
-            personaRepository.SaveChanges();
+            basePersonaRepository.DeleteById(id);
+            basePersonaRepository.SaveChanges();
             return true;
         }
 
         public async Task<IEnumerable<PersonaInfoDto>> GetAll()
         {
-            var entitie = await personaRepository.GetAllIncludeAsync(e => e.Domicilio);
+            var entitie = await context.Personas.AsNoTracking().ToListAsync();
             return AutoMapperConfiguration.mapper.Map<IEnumerable<PersonaInfoDto>>(entitie);
         }
 
         public async Task<PersonaInfoDto> GetPerson(int id)
         {
-            Expression<Func<Persona, object>>[] joinTables = { m => m.Domicilio};
-            var entitie = await personaRepository.FindByIncludeAsync(e => e.Id == id, joinTables);
+            var entitie = await GetPersonaByIdAsync(id);
             return AutoMapperConfiguration.mapper.Map<PersonaInfoDto>(entitie);
         }
 
         public async Task<(string, bool)> UpdatePerson(PersonaForUpdateDto persona)
         {
-            var entitiePersona = await personaRepository.FindByIncludeAsync(e => e.Id == persona.Id, e => e.Domicilio);
+            var entitiePersona = await GetPersonaByIdAsync(persona.Id);
             if (entitiePersona is null)
                 return ("No se encuentra el registro", false);
 
@@ -73,14 +77,14 @@ namespace Galicia.Test.BusinessRules.Implementation.Person
                 return ("Ya existe un Telefono igual al suministrado", false);
 
             var entitieToUpdate = AutoMapperConfiguration.mapper.Map(persona, entitiePersona);
-            personaRepository.Update(entitieToUpdate);
-            personaRepository.SaveChanges();
+            basePersonaRepository.Update(entitieToUpdate);
+            basePersonaRepository.SaveChanges();
             return ("",true);
         }
 
         private async Task<bool> ExistDNI(int id, int dni)
         {
-            var result = await personaRepository.WhereAsync(e => e.DNI == dni && e.Id != id);
+            var result = await context.Personas.Where(e => e.DNI == dni && e.Id != id).FirstOrDefaultAsync();
             if (result != null)
                 return true;
             
@@ -88,11 +92,16 @@ namespace Galicia.Test.BusinessRules.Implementation.Person
         }
         private async Task<bool> ExistsTelefono(int id, string telefono)
         {
-            var result = await personaRepository.WhereAsync(e => e.Telefono == telefono && e.Id != id);
+            var result = await context.Personas.Where(e => e.Telefono == telefono && e.Id != id).FirstOrDefaultAsync();
             if (result != null)
                 return true;
 
             return false;
         }
+        private async Task<Persona> GetPersonaByIdAsync(int id)
+        {
+            return await context.Personas.Where(e => e.Id == id).Include(e => e.Domicilio).FirstOrDefaultAsync();
+        }
+
     }
 }

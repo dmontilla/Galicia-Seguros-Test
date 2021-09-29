@@ -21,6 +21,8 @@ namespace Galicia.Test.Shared.Profiles
                     .ForPath(d => d.Domicilio, s => s.MapFrom(m => m.Domicilio));
 
                 cfg.CreateMap<DomicilioForCreateDto, Domicilio>();
+                cfg.CreateMap<PersonaForUpdateDto, Persona>()
+                    .ForPath(d => d.Domicilio, s => s.MapFrom(m => m.Domicilio));
             });
 
             mapper = config.CreateMapper();

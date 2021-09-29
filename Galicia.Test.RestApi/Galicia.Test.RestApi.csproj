@@ -7,6 +7,11 @@
     <Version>1.0.0.1</Version>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\files\Galicia Seguros Test\Galicia.Test.RestApi\Galicia.Test.RestApi.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Dockerfile" />
   </ItemGroup>
@@ -29,12 +34,6 @@
 
   <ItemGroup>
     <None Remove="..\.dockerignore" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Galicia.Test.RestApi.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 

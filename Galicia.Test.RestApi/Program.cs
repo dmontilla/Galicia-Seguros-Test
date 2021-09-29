@@ -17,7 +17,7 @@ namespace Galicia.Test.RestApi
             {
                 try
                 {
-                    var context = scope.ServiceProvider.GetService<TestContext>();
+                    var context = scope.ServiceProvider.GetService<TestDbContext>();
                     context.Database.EnsureCreated();
                     //context.Database.Migrate();
                 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Galicia.Test.Shared.CustomValidations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Galicia.Test.Shared.Dto.Domicilio
 {
@@ -9,6 +10,7 @@ namespace Galicia.Test.Shared.Dto.Domicilio
         public string Calle { get; set; }
 
         [Required(ErrorMessage = "La altura es un valor requerido")]
+        [MinValuePropertyValidation(minValue: 0, ErrorMessage = "La altura de la calle debe ser mayor a 0")]
         public int Altura { get; set; }
 
         [Required(ErrorMessage = "El número de departamento es un valor requerido")]
@@ -16,6 +18,7 @@ namespace Galicia.Test.Shared.Dto.Domicilio
         public string Departamento { get; set; }
 
         [Required(ErrorMessage = "El Código Postal es un valor requerido")]
+        [MinValuePropertyValidation(minValue: 0, ErrorMessage = "El codigo postal debe ser mayor a 0")]
         public int CodigoPostal { get; set; }
     }
 }

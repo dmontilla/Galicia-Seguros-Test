@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Galicia.Test.Infrastructure.Data
 {
-    public class TestContext : DbContext
+    public class TestDbContext : DbContext
     {
-        public TestContext()
+        public TestDbContext()
         {
         }
-        public TestContext(DbContextOptions options):base(options)
+        public TestDbContext(DbContextOptions options):base(options)
         {
         }
         public virtual DbSet<Persona> Personas { get; set; }

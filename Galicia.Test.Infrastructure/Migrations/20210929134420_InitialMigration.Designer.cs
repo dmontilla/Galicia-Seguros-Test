@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Galicia.Test.Infrastructure.Migrations
 {
-    [DbContext(typeof(TestContext))]
+    [DbContext(typeof(TestDbContext))]
     [Migration("20210929134420_InitialMigration")]
     partial class InitialMigration
     {
