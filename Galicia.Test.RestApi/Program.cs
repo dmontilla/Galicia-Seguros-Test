@@ -12,6 +12,7 @@ namespace Galicia.Test.RestApi
     {
         public static void Main(string[] args)
         {
+            Debug.WriteLine("Iniciando servicio");
             var host = CreateHostBuilder(args).Build();
             using (var scope = host.Services.CreateScope())
             {
@@ -19,13 +20,13 @@ namespace Galicia.Test.RestApi
                 {
                     var context = scope.ServiceProvider.GetService<TestDbContext>();
                     context.Database.EnsureCreated();
-                    //context.Database.Migrate();
+                    context.Database.Migrate();
                 }
                 catch (Exception ex)
                 {
                     //TODO: LOGGER
                     Debug.WriteLine(ex.ToString());
-                    throw;
+                    //throw;
                 }
             }
             host.Run();

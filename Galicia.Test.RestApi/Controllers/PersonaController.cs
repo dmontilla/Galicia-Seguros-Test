@@ -91,7 +91,7 @@ namespace Galicia.Test.RestApi.Controllers
 
                 return Created("Get", new { id = result.Item1 });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //TODO : LOGS
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error interno, consulte a sistemas");

@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  galicia.test.restapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "9090:80"
+      - "443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    image: ${DOCKER_REGISTRY-}galiciatestrestapi
+    build:
+        context: .
+        dockerfile: Dockerfile
+    depends_on:
+        - db
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+        SA_PASSWORD: ".GaliciaSeguros5452*"
+        ACCEPT_EULA: "Y"
+    ports:
+    - "14331:1433"     

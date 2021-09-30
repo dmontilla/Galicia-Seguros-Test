@@ -5,16 +5,13 @@
     <UserSecretsId>533fd490-0a0b-4794-8302-6ecd6aac38c8</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <Version>1.0.0.1</Version>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>C:\files\Galicia Seguros Test\Galicia.Test.RestApi\Galicia.Test.RestApi.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="Dockerfile" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
@@ -33,7 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="..\.dockerignore" />
+    <None Update="Galicia.Test.RestApi.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 

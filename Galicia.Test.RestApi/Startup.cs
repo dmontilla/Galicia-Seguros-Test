@@ -64,7 +64,7 @@ namespace Galicia.Test.RestApi
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Rest API Ejemplo");
             });
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

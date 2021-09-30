@@ -25,6 +25,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galicia.Test.Core", "Galici
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galicia.Test.RestApi", "Galicia.Test.RestApi\Galicia.Test.RestApi.csproj", "{692E978D-8EE4-4D64-989E-9E04C5749DB0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{73BBAAF2-5C67-47F2-AC02-75DD9A100AE9}"
+	ProjectSection(SolutionItems) = preProject
+		README.txt = README.txt
+	EndProjectSection
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{96E1D16B-6148-4057-9334-201474EDD9FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +62,10 @@ Global
 		{692E978D-8EE4-4D64-989E-9E04C5749DB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{692E978D-8EE4-4D64-989E-9E04C5749DB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{692E978D-8EE4-4D64-989E-9E04C5749DB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96E1D16B-6148-4057-9334-201474EDD9FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96E1D16B-6148-4057-9334-201474EDD9FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96E1D16B-6148-4057-9334-201474EDD9FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96E1D16B-6148-4057-9334-201474EDD9FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
